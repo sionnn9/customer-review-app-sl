@@ -60,7 +60,8 @@ export default function ChatUI() {
   const [message, setMessage] = useState<Message | null>(null);
   const [input, setInput] = useState<string>("");
   const [sentiment, setSentiment] = useState([0, 0, 0]); // [positive, negative, neutral]
-
+  const wordCount: Record<string, number> = {};
+  let spamScore = 0;
   const sendMessage = () => {
     if (!input.trim()) return;
 
@@ -69,11 +70,20 @@ export default function ChatUI() {
 
     words.forEach((word) => {
       const lower = word.toLowerCase();
+
+      // count word occurrences
+      wordCount[lower] = (wordCount[lower] || 0) + 1;
+
+      // increment sentiment counts
       if (DataSet.positive.includes(lower)) counts[0]++;
       else if (DataSet.negative.includes(lower)) counts[1]++;
       else if (DataSet.neutral.includes(lower)) counts[2]++;
     });
 
+    // mark as spam if any word repeats too much
+    for (const w in wordCount) {
+      if (wordCount[w] > 5) spamScore++;
+    }
     setSentiment(counts); // update sentiment once
     setMessage({ text: input });
     setInput("");
@@ -120,6 +130,7 @@ export default function ChatUI() {
         <p>Positive: {positivePercent}%</p>
         <p>Negative: {negativePercent}%</p>
         <p>Neutral: {neutralPercent}%</p>
+        <p>Spam Score:{spamScore}</p>
       </div>
 
       {/* Input box */}
