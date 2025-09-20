@@ -107,21 +107,22 @@ export default function ChatUI() {
     total === 0 ? 0 : ((positivePercent - negativePercent) / 100) * 90;
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-900 text-white">
       {/* Chat messages */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-3">
+      <div className="flex-1 p-6 overflow-y-auto space-y-3">
         {message && (
           <div className="flex flex-wrap">
             {message.text.split(" ").map((word, i) => {
               const lower = word.toLowerCase();
-              let className = "ml-1 text-black";
+              let className = "ml-1";
 
               if (DataSet.positive.includes(lower))
-                className = "ml-1 text-green-600 font-semibold";
+                className = "ml-1 text-green-500 font-semibold";
               else if (DataSet.negative.includes(lower))
-                className = "ml-1 text-red-600 font-semibold";
+                className = "ml-1 text-red-500 font-semibold";
               else if (DataSet.neutral.includes(lower))
-                className = "ml-1 text-yellow-600 font-semibold";
+                className = "ml-1 text-yellow-400 font-semibold";
+              else className = "ml-1 text-gray-200";
 
               return (
                 <span key={i} className={className}>
@@ -136,49 +137,46 @@ export default function ChatUI() {
       {/* Semicircle Gauge */}
       <div className="flex justify-center p-4">
         <div className="relative w-72 h-36">
-          {/* Color gradient semicircle */}
           <div
             className="absolute w-full h-full rounded-t-full overflow-hidden"
             style={{
               background:
-                "linear-gradient(to right, #f56565, #ecc94b, #48bb78)", // red → yellow → green
+                "linear-gradient(to right, #ef4444, #facc15, #22c55e)", // red → yellow → green
             }}
           ></div>
 
-          {/* Arrow */}
           <div
-            className="absolute bottom-0 left-1/2 w-1 h-36 bg-black origin-bottom transition-transform duration-300"
+            className="absolute bottom-0 left-1/2 w-1 h-36 bg-white origin-bottom transition-transform duration-300"
             style={{ transform: `translateX(-50%) rotate(${gaugeAngle}deg)` }}
           ></div>
 
-          {/* Labels */}
-          <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-800 px-2">
-            <span>Bad</span>
-            <span>Neutral</span>
-            <span>Good</span>
+          <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-300 px-2">
+            <span className="font-bold text-black">Bad</span>
+            <span className="font-bold text-black">Neutral</span>
+            <span className="font-bold text-black">Good</span>
           </div>
         </div>
       </div>
 
       {/* Sentiment Percentages */}
-      <div className="p-3 border-t text-sm sm:text-base md:text-lg flex justify-around">
-        <p className="text-green-600 font-semibold">
+      <div className="p-3 border-t border-gray-700 text-sm sm:text-base md:text-lg flex justify-around">
+        <p className="text-green-500 font-semibold">
           Positive: {positivePercent.toFixed(0)}%
         </p>
-        <p className="text-red-600 font-semibold">
+        <p className="text-red-500 font-semibold">
           Negative: {negativePercent.toFixed(0)}%
         </p>
-        <p className="text-yellow-600 font-semibold">
+        <p className="text-yellow-400 font-semibold">
           Neutral: {neutralPercent.toFixed(0)}%
         </p>
 
-        <p className=" text-black">Spam Score:{spamScore}</p>
+        <p className="text-gray-200">Spam Score: {spamScore}</p>
       </div>
 
       {/* Input box */}
-      <div className="p-3 border-t flex bg-white">
+      <div className="p-3 border-t border-gray-700 flex bg-gray-800">
         <input
-          className="flex-1 border border-gray-300 text-black rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="flex-1 border border-gray-600 bg-gray-900 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={input}
           onChange={handleChange}
           placeholder="Type a message..."
@@ -186,7 +184,7 @@ export default function ChatUI() {
         />
         <button
           onClick={sendMessage}
-          className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition"
+          className="ml-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition"
         >
           Send
         </button>

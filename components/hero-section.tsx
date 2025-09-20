@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function HeroSection() {
+  const router = useRouter();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -16,31 +19,53 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto text-center">
         <div className="opacity-0 animate-fade-in-up">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
-            The Future of{" "}
+            Hearing every voice{" "}
             <span className="bg-gradient-to-r from-primary to-muted-foreground bg-clip-text text-transparent">
-              Digital Innovation
+              shaping better experiences.
             </span>
           </h1>
         </div>
 
         <div className="opacity-0 animate-fade-in-up animate-delay-200">
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Empowering businesses with cutting-edge technology solutions that
-            drive growth, enhance productivity, and create exceptional user
-            experiences.
+            HearMeOut collects and analyzes customer reviews in one place. It
+            highlights trends, problems, and strengths using automated insights.
+            Companies get clear, actionable recommendations to improve products
+            and customer experience.
           </p>
         </div>
 
         <div className="opacity-0 animate-fade-in-up animate-delay-400">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-              onClick={() => scrollToSection("about")}
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <div className="flex flex-col space-y-4">
+              {" "}
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+                onClick={() => router.push("/Chat")}
+              >
+                Get Started
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <div>
+                <Button
+                  size="lg"
+                  className="gap-x-4 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+                  onClick={() => scrollToSection("about")}
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+                  onClick={() => scrollToSection("about")}
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
