@@ -24,7 +24,6 @@ const Page = () => {
         });
         const data = await response.json();
         setReviews(data.reviews);
-        console.log(data.reviews);
       } catch (error) {
         console.error("Failed to fetch comments:", error);
       }
@@ -37,41 +36,45 @@ const Page = () => {
     return <p className="text-center mt-6 text-gray-400">Loading reviews...</p>;
 
   return (
-    <div className="space-y-6">
-      {reviews.map(({ username, review }) => (
-        <div
-          key={review._id}
-          className="max-w-md mx-auto bg-black text-white rounded-xl shadow-md overflow-hidden p-6 space-y-4 border border-gray-700"
-        >
-          {/* User Info */}
-          <div className="flex items-center space-x-4">
-            <img
-              src="https://via.placeholder.com/60"
-              alt="User Avatar"
-              className="w-16 h-16 rounded-full border border-gray-500"
-            />
-            <div>
-              <h2 className="text-lg font-semibold">{username}</h2>
-              {/* Stars */}
-              <div className="flex mt-1 space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-6 h-6 ${
-                      i < review.rating
-                        ? "text-yellow-400 fill-current"
-                        : "text-gray-600"
-                    }`}
-                  />
-                ))}
+    <div className="p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map(({ username, review }) => (
+          <div
+            key={review._id}
+            className="bg-black text-white rounded-xl shadow-md overflow-hidden p-6 space-y-4 border border-gray-700 hover:scale-105 transition-transform duration-200"
+          >
+            {/* User Info */}
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://via.placeholder.com/60"
+                alt="User Avatar"
+                className="w-16 h-16 rounded-full border border-gray-500"
+              />
+              <div>
+                <h2 className="text-lg font-semibold">{username}</h2>
+                {/* Stars */}
+                <div className="flex mt-1 space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-6 h-6 ${
+                        i < review.rating
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-600"
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* User Comment */}
-          <p className="text-gray-300 text-sm sm:text-base">{review.content}</p>
-        </div>
-      ))}
+            {/* User Comment */}
+            <p className="text-gray-300 text-sm sm:text-base">
+              {review.content}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

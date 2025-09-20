@@ -53,7 +53,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-                  onClick={() => scrollToSection("about")}
+                  onClick={() => router.push("/goodReview")}
                 >
                   Good Reviews
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -62,7 +62,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-                  onClick={() => scrollToSection("features")}
+                  onClick={() => router.push("/badReview")}
                 >
                   Bad Reviews
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -70,7 +70,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-                  onClick={() => scrollToSection("features")}
+                  onClick={() => router.push("/nutral")}
                 >
                   Neutral Reviews
                   <ArrowRight className="ml-2 h-5 w-5" />
