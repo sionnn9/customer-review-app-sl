@@ -19,7 +19,7 @@ const Page = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/good", {
+        const response = await fetch("http://localhost:8080/api/neutral", {
           method: "GET",
         });
         const data = await response.json();
