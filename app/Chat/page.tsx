@@ -107,7 +107,15 @@ export default function ChatUI() {
     total === 0 ? 0 : ((positivePercent - negativePercent) / 100) * 90;
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900 text-white">
+    <div className="flex flex-col h-screen bg-black text-white">
+      {/* Header */}
+      {/* Header */}
+      <div className="p-6 border-b border-gray-700 flex justify-center">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white text-center relative">
+          Sentiment Analysis
+        </h1>
+      </div>
+
       {/* Chat messages */}
       <div className="flex-1 p-6 overflow-y-auto space-y-3">
         {message && (
@@ -174,9 +182,9 @@ export default function ChatUI() {
       </div>
 
       {/* Input box */}
-      <div className="p-3 border-t border-gray-700 flex bg-gray-800">
+      <div className="p-3 border-t border-gray-700 flex bg-black">
         <input
-          className="flex-1 border border-gray-600 bg-gray-900 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 border border-gray-600 bg-black text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={input}
           onChange={handleChange}
           placeholder="Type a message..."
