@@ -1,88 +1,92 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Code, Users, Zap, Shield, Globe, Rocket } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Code, Users, Zap, Shield, Globe, Rocket } from "lucide-react";
 
 export function AboutSection() {
   const features = [
     {
       icon: <Code className="h-8 w-8" />,
-      title: "Advanced Development",
+      title: "Sentiment Analysis",
       description:
-        "Cutting-edge technologies and frameworks to build scalable, modern applications that meet tomorrow's demands.",
+        " Automatically evaluates customer reviews to identify positive, negative, or neutral feedback, helping companies quickly spot trends and issues. ",
     },
     {
       icon: <Users className="h-8 w-8" />,
-      title: "Expert Team",
-      description:
-        "Our diverse team of specialists brings years of experience across multiple industries and technologies.",
+      title: "Centralized customer review analysis",
+      description: "Collect all reviews in one place for easier monitoring.",
     },
     {
       icon: <Zap className="h-8 w-8" />,
-      title: "Lightning Fast",
-      description: "Optimized performance and efficient solutions that deliver results at unprecedented speed.",
+      title: "Automated insights",
+      description:
+        "Identify common problems, praise points, and trends without manual effort.",
     },
     {
       icon: <Shield className="h-8 w-8" />,
-      title: "Enterprise Security",
-      description: "Bank-level security protocols and compliance standards to protect your most valuable data.",
+      title: "Actionable summaries",
+      description: "Generate short, clear recommendations from review data.",
     },
     {
       icon: <Globe className="h-8 w-8" />,
-      title: "Global Scale",
-      description: "Infrastructure designed to scale globally with 99.9% uptime and worldwide content delivery.",
+      title: "Collect and analyze reviews from anywhere",
+      description:
+        "HearMeOut aggregates customer feedback across multiple platforms and regions, giving companies a clear global view of customer sentiment to understand trends and preferences worldwide.",
     },
     {
       icon: <Rocket className="h-8 w-8" />,
-      title: "Innovation First",
+      title: "Turn feedback into action instantly",
       description:
-        "Always at the forefront of technology, implementing the latest innovations for competitive advantage.",
+        "The platform quickly evaluates reviews and generates concise, actionable recommendations, enabling companies to respond to customer feedback faster and improve products or services efficiently.",
     },
-  ]
+  ];
 
-  const technologies = ["React", "Next.js", "TypeScript", "Node.js", "Python", "AWS", "Docker", "Kubernetes"]
+  const technologies = [
+    "Sentiment Analysis",
+    "Trends",
+    "Visualization",
+    "Tracking",
+    "Reviews",
+    "Solutions",
+    "Data Analysis",
+    "Customer Feedback",
+  ];
 
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">About TechFlow</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            About HearMeOut
+          </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-pretty">
-            We are a forward-thinking technology company dedicated to transforming businesses through innovative digital
-            solutions. Our mission is to bridge the gap between complex technology and practical business outcomes.
+            HearMeOut is a smart platform that listens to customer feedback,
+            analyzes reviews, and turns them into clear, actionable insights. It
+            helps businesses understand what customers love, what needs
+            improvement, and how to enhance their products and services—all from
+            a single, easy-to-use dashboard.
           </p>
         </div>
 
         {/* Company Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">500+</div>
-            <div className="text-muted-foreground">Projects Delivered</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">50+</div>
-            <div className="text-muted-foreground">Expert Engineers</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
-            <div className="text-muted-foreground">Uptime Guarantee</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-            <div className="text-muted-foreground">Support Available</div>
-          </div>
-        </div>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-card border-border hover:bg-accent/50 transition-colors duration-300">
+            <Card
+              key={index}
+              className="bg-card border-border hover:bg-accent/50 transition-colors duration-300"
+            >
               <CardContent className="p-6">
                 <div className="text-primary mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-semibold text-foreground mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {feature.description}
+                </p>
               </CardContent>
             </Card>
           ))}
@@ -90,7 +94,9 @@ export function AboutSection() {
 
         {/* Technologies */}
         <div className="text-center">
-          <h3 className="text-2xl font-semibold text-foreground mb-6">Technologies We Master</h3>
+          <h3 className="text-2xl font-semibold text-foreground mb-6">
+            Features We Provide
+          </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {technologies.map((tech, index) => (
               <Badge
@@ -108,21 +114,47 @@ export function AboutSection() {
         <div className="mt-16 max-w-4xl mx-auto">
           <Card className="bg-card border-border">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold text-foreground mb-4">Our Story</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-4">
+                Detailed information on our website
+              </h3>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Founded in 2020 by a team of passionate engineers and entrepreneurs, TechFlow emerged from a simple
-                  belief: technology should empower, not complicate. We started in a small garage with big dreams and an
-                  unwavering commitment to excellence.
+                  HearMeOut is a centralized platform designed to help
+                  businesses understand their customers better by collecting and
+                  analyzing reviews from multiple sources. Our website provides
+                  a seamless interface where companies can easily upload,
+                  manage, and view customer feedback in one place. By
+                  consolidating all reviews into a single dashboard, HearMeOut
+                  eliminates the need for multiple disconnected tools and manual
+                  analysis, saving time and reducing errors. Whether your
+                  business is small or large, the platform adapts to your needs,
+                  giving you a comprehensive overview of what customers think
+                  about your products and services.
                 </p>
                 <p>
-                  Today, we've grown into a trusted partner for businesses worldwide, from innovative startups to
-                  Fortune 500 companies. Our journey has been marked by continuous learning, adaptation, and an
-                  relentless focus on delivering value to our clients.
+                  The platform uses advanced sentiment analysis and automated
+                  insights to highlight both strengths and areas for
+                  improvement. Positive, negative, and neutral feedback is
+                  automatically categorized, making it easier to identify trends
+                  and recurring issues. Our website allows users to generate
+                  actionable summaries from the collected data, so teams can
+                  quickly understand customer sentiment and take proactive steps
+                  to enhance the customer experience. Detailed visualizations,
+                  graphs, and charts ensure that even non-technical users can
+                  interpret the results effortlessly.
                 </p>
                 <p>
-                  As we look to the future, we remain committed to pushing the boundaries of what's possible, embracing
-                  emerging technologies, and helping our clients stay ahead in an ever-evolving digital landscape.
+                  Beyond analytics, HearMeOut focuses on helping businesses act
+                  on customer feedback effectively. The website provides
+                  features like global review aggregation, trend tracking, and a
+                  centralized recommendation system that helps companies
+                  prioritize solutions. Future updates will include community
+                  discussion areas, tracking the impact of implemented
+                  solutions, and integration with more platforms, making it a
+                  robust tool for long-term growth. By visiting our website,
+                  companies can explore demo prototypes, understand the tech
+                  stack behind the platform, and see how HearMeOut can transform
+                  review management into a strategic advantage.
                 </p>
               </div>
             </CardContent>
@@ -130,5 +162,5 @@ export function AboutSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
