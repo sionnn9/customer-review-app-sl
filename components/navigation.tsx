@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
+import Link from "next/link"
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,12 +21,12 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-primary-foreground rounded-sm transform rotate-45"></div>
             </div>
             <span className="text-xl font-bold text-foreground">TechFlow</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -35,9 +36,11 @@ export function Navigation() {
             >
               About Us
             </button>
-            <Button variant="ghost" size="sm">
-              Login
-            </Button>
+            <Link href="/login">
+              <Button variant="ghost" size="sm">
+                Login
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -58,9 +61,11 @@ export function Navigation() {
               >
                 About Us
               </button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                Login
-              </Button>
+              <Link href="/login" className="block">
+                <Button variant="ghost" size="sm" className="w-full justify-start">
+                  Login
+                </Button>
+              </Link>
             </div>
           </div>
         )}

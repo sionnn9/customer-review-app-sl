@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Play } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Play } from "lucide-react";
 
 export function HeroSection() {
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
@@ -25,8 +25,9 @@ export function HeroSection() {
 
         <div className="opacity-0 animate-fade-in-up animate-delay-200">
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Empowering businesses with cutting-edge technology solutions that drive growth, enhance productivity, and
-            create exceptional user experiences.
+            Empowering businesses with cutting-edge technology solutions that
+            drive growth, enhance productivity, and create exceptional user
+            experiences.
           </p>
         </div>
 
@@ -40,21 +41,9 @@ export function HeroSection() {
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-8 py-3 text-lg border-border hover:bg-accent bg-transparent"
-            >
-              <Play className="mr-2 h-5 w-5" />
-              Watch Demo
-            </Button>
           </div>
-        </div>
-
-        <div className="opacity-0 animate-fade-in animate-delay-600">
-          <div className="text-sm text-muted-foreground font-mono">{"> npx create-techflow-app@latest"}</div>
         </div>
       </div>
     </section>
-  )
+  );
 }
