@@ -38,7 +38,7 @@ export function HeroSection() {
         <div className="opacity-0 animate-fade-in-up animate-delay-400">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <div className="flex flex-col space-y-4">
-              {" "}
+              {/* Navigate to /Chat */}
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
@@ -47,21 +47,32 @@ export function HeroSection() {
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <div>
-                <Button
-                  size="lg"
-                  className="gap-x-4 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-                  onClick={() => scrollToSection("about")}
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+
+              <div className="flex space-x-4">
+                {/* Scroll to About Section */}
                 <Button
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
                   onClick={() => scrollToSection("about")}
                 >
-                  Get Started
+                  Good Reviews
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+                  onClick={() => scrollToSection("features")}
+                >
+                  Bad Reviews
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
+                  onClick={() => scrollToSection("features")}
+                >
+                  Neutral Reviews
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
