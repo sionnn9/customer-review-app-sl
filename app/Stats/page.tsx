@@ -28,6 +28,11 @@ const ReviewDashboard = () => {
       bad: 5,
       neutral: 5,
     },
+    sentimentAverages: {
+      good: 0,
+      bad: 2.5,
+      neutral: 2.5,
+    },
     dominantSentimentCounts: {
       good: 0,
       bad: 1,
@@ -36,11 +41,12 @@ const ReviewDashboard = () => {
   };
 
   const sentimentColors: Record<string, string> = {
-    good: "#22c55e", // green
-    neutral: "#facc15", // yellow
-    bad: "#ef4444", // red
+    good: "#22c55e",
+    neutral: "#facc15",
+    bad: "#ef4444",
   };
 
+  // Prepare Pie Chart Data
   const sentimentPieData = Object.entries(data.sentimentTotals).map(
     ([key, value]) => ({
       name: key,
@@ -49,12 +55,19 @@ const ReviewDashboard = () => {
     })
   );
 
-  const ratingsBarData = [
-    { name: "Min", value: data.ratings.min },
-    { name: "Max", value: data.ratings.max },
+  // Prepare Bar Chart Data for ratings analysis
+  const ratingsGraphData = [
     { name: "Average", value: data.ratings.average },
     { name: "Median", value: data.ratings.median },
+    { name: "Mode 1", value: data.ratings.mode[0] || 0 },
+    { name: "Mode 2", value: data.ratings.mode[1] || 0 },
+    { name: "Std Dev", value: data.ratings.standardDeviation },
   ];
+
+  // Prepare Bar Chart Data for sentiment averages
+  const sentimentAvgGraphData = Object.entries(data.sentimentAverages).map(
+    ([key, value]) => ({ name: key, value })
+  );
 
   return (
     <div className="p-8 bg-black min-h-screen text-white space-y-10">
@@ -64,13 +77,25 @@ const ReviewDashboard = () => {
         <span className="font-semibold">{data.totalReviews}</span>
       </p>
 
-      {/* Ratings Bar Chart */}
+      {/* Min & Max as Cards */}
+      <div className="grid grid-cols-2 gap-6">
+        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-red-500">
+          <h3 className="text-lg font-semibold">Minimum Rating</h3>
+          <p className="text-3xl font-bold mt-2">{data.ratings.min}</p>
+        </div>
+        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-green-400">
+          <h3 className="text-lg font-semibold">Maximum Rating</h3>
+          <p className="text-3xl font-bold mt-2">{data.ratings.max}</p>
+        </div>
+      </div>
+
+      {/* Ratings Graph */}
       <div className="bg-gray-900 rounded-xl p-6 shadow-md">
         <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">
-          Ratings Overview
+          Ratings Analysis
         </h2>
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={ratingsBarData}>
+          <BarChart data={ratingsGraphData}>
             <XAxis dataKey="name" stroke="#ccc" />
             <YAxis stroke="#ccc" />
             <Tooltip
@@ -87,10 +112,39 @@ const ReviewDashboard = () => {
             <Bar
               dataKey="value"
               radius={[5, 5, 0, 0]}
-              fill="#22c55e"
-              onMouseEnter={(e) => {}}
-              onMouseLeave={(e) => {}}
+              fill="url(#ratingGradient)"
             />
+            <defs>
+              <linearGradient id="ratingGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#22c55e" stopOpacity={1} />
+                <stop offset="100%" stopColor="#16a34a" stopOpacity={0.7} />
+              </linearGradient>
+            </defs>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Sentiment Averages Bar Chart */}
+      <div className="bg-gray-900 rounded-xl p-6 shadow-md">
+        <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">
+          Sentiment Averages
+        </h2>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={sentimentAvgGraphData}>
+            <XAxis dataKey="name" stroke="#ccc" />
+            <YAxis stroke="#ccc" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#111",
+                border: "1px solid #333",
+                borderRadius: "8px",
+                padding: "8px",
+                color: "#fff",
+              }}
+              itemStyle={{ color: "#fff" }}
+              cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+            />
+            <Bar dataKey="value" radius={[5, 5, 0, 0]} fill="#facc15" />
           </BarChart>
         </ResponsiveContainer>
       </div>
