@@ -75,7 +75,8 @@ export default function ChatUI() {
           username: "mohan",
           message: message?.text, // replace with your actual message
           rating: 0.45, // your rating value
-          sentiment: sentiment, // sentiment array
+          sentinental_analysis: sentiment, // sentiment array
+          isSpam: isSpam,
         }),
       });
 
@@ -110,7 +111,7 @@ export default function ChatUI() {
 
     // mark as spam if any word repeats too much
     for (const w in wordCount) {
-      if (wordCount[w] > 5) {
+      if (wordCount[w] > 3) {
         spamScore++;
         setisSpam(true);
       }

@@ -24,7 +24,6 @@ const Page = () => {
         });
         const data = await response.json();
         setReviews(data.reviews);
-        console.log(data.reviews);
       } catch (error) {
         console.error("Failed to fetch comments:", error);
       }
@@ -37,16 +36,16 @@ const Page = () => {
     return <p className="text-center mt-6 text-gray-400">Loading reviews...</p>;
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-wrap pt-4 justify-center gap-8 px-4 md:px-10 lg:px-20">
       {reviews.map(({ username, review }) => (
         <div
           key={review._id}
-          className="max-w-md mx-auto bg-black text-white rounded-xl shadow-md overflow-hidden p-6 space-y-4 border border-gray-700"
+          className="w-full sm:w-80 md:w-96 bg-black text-white rounded-xl shadow-lg overflow-hidden p-6 space-y-4 border border-gray-700 hover:scale-105 transition-transform duration-200"
         >
           {/* User Info */}
           <div className="flex items-center space-x-4">
             <img
-              src="https://via.placeholder.com/60"
+              src="https://i.pinimg.com/474x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg?nii=t"
               alt="User Avatar"
               className="w-16 h-16 rounded-full border border-gray-500"
             />

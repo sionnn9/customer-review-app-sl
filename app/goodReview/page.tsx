@@ -46,7 +46,7 @@ const Page = () => {
             {/* User Info */}
             <div className="flex items-center space-x-4">
               <img
-                src="https://via.placeholder.com/60"
+                src="https://i.pinimg.com/474x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg?nii=t"
                 alt="User Avatar"
                 className="w-16 h-16 rounded-full border border-gray-500"
               />
