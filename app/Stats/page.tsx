@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -12,59 +12,79 @@ import {
   Cell,
 } from "recharts";
 
-const ReviewDashboard = () => {
-  const data = {
-    totalReviews: 2,
-    ratings: {
-      min: 2,
-      max: 3,
-      average: 2.5,
-      median: 2.5,
-      mode: [2, 3],
-      standardDeviation: 0.5,
-    },
-    sentimentTotals: {
-      good: 0,
-      bad: 5,
-      neutral: 5,
-    },
-    sentimentAverages: {
-      good: 0,
-      bad: 2.5,
-      neutral: 2.5,
-    },
-    dominantSentimentCounts: {
-      good: 0,
-      bad: 1,
-      neutral: 1,
-    },
-  };
+interface Ratings {
+  min: number;
+  max: number;
+  average: number;
+  median: number;
+  mode: number[];
+  standardDeviation: number;
+}
 
+interface ReviewData {
+  totalReviews: number;
+  ratings: Ratings;
+  sentimentTotals: Record<string, number>;
+  sentimentAverages: Record<string, number>;
+  dominantSentimentCounts: Record<string, number>;
+}
+
+const ReviewDashboard = () => {
+  const [data, setData] = useState<ReviewData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Fetch dynamic data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/reviews"); // Replace with your API endpoint
+        if (!res.ok) throw new Error("Failed to fetch data");
+        const json = await res.json();
+        setData(json);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading)
+    return <p className="text-white text-center mt-10">Loading dashboard...</p>;
+  if (error)
+    return <p className="text-red-500 text-center mt-10">Error: {error}</p>;
+  if (!data) return null;
+
+  // Colors for sentiments
   const sentimentColors: Record<string, string> = {
     good: "#22c55e",
     neutral: "#facc15",
     bad: "#ef4444",
   };
 
-  // Prepare Pie Chart Data
+  // Sentiment Pie Chart Data
   const sentimentPieData = Object.entries(data.sentimentTotals).map(
     ([key, value]) => ({
       name: key,
       value: value,
-      color: sentimentColors[key],
+      color: sentimentColors[key] || "#8884d8",
     })
   );
 
-  // Prepare Bar Chart Data for ratings analysis
+  // Ratings Graph Data
   const ratingsGraphData = [
     { name: "Average", value: data.ratings.average },
     { name: "Median", value: data.ratings.median },
-    { name: "Mode 1", value: data.ratings.mode[0] || 0 },
-    { name: "Mode 2", value: data.ratings.mode[1] || 0 },
+    ...data.ratings.mode.map((m, idx) => ({
+      name: `Mode ${idx + 1}`,
+      value: m,
+    })),
     { name: "Std Dev", value: data.ratings.standardDeviation },
   ];
 
-  // Prepare Bar Chart Data for sentiment averages
+  // Sentiment Averages Bar Chart Data
   const sentimentAvgGraphData = Object.entries(data.sentimentAverages).map(
     ([key, value]) => ({ name: key, value })
   );
@@ -77,19 +97,19 @@ const ReviewDashboard = () => {
         <span className="font-semibold">{data.totalReviews}</span>
       </p>
 
-      {/* Min & Max as Cards */}
+      {/* Min & Max Ratings */}
       <div className="grid grid-cols-2 gap-6">
-        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-red-500">
+        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-red-500 hover:scale-105 transition-transform duration-200">
           <h3 className="text-lg font-semibold">Minimum Rating</h3>
           <p className="text-3xl font-bold mt-2">{data.ratings.min}</p>
         </div>
-        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-green-400">
+        <div className="bg-gray-900 p-6 rounded-xl shadow-md text-center border-t-4 border-green-400 hover:scale-105 transition-transform duration-200">
           <h3 className="text-lg font-semibold">Maximum Rating</h3>
           <p className="text-3xl font-bold mt-2">{data.ratings.max}</p>
         </div>
       </div>
 
-      {/* Ratings Graph */}
+      {/* Ratings Analysis */}
       <div className="bg-gray-900 rounded-xl p-6 shadow-md">
         <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">
           Ratings Analysis
@@ -107,7 +127,7 @@ const ReviewDashboard = () => {
                 color: "#fff",
               }}
               itemStyle={{ color: "#fff" }}
-              cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+              cursor={{ fill: "rgba(255,255,255,0.05)" }}
             />
             <Bar
               dataKey="value"
@@ -124,7 +144,7 @@ const ReviewDashboard = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* Sentiment Averages Bar Chart */}
+      {/* Sentiment Averages */}
       <div className="bg-gray-900 rounded-xl p-6 shadow-md">
         <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">
           Sentiment Averages
@@ -142,14 +162,14 @@ const ReviewDashboard = () => {
                 color: "#fff",
               }}
               itemStyle={{ color: "#fff" }}
-              cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+              cursor={{ fill: "rgba(255,255,255,0.05)" }}
             />
             <Bar dataKey="value" radius={[5, 5, 0, 0]} fill="#facc15" />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Sentiment Pie Chart */}
+      {/* Sentiment Distribution Pie */}
       <div className="bg-gray-900 rounded-xl p-6 shadow-md">
         <h2 className="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">
           Sentiment Distribution
@@ -163,7 +183,6 @@ const ReviewDashboard = () => {
               cx="50%"
               cy="50%"
               outerRadius={80}
-              fill="#8884d8"
               label={({ name, percent }) =>
                 `${name}: ${(percent * 100).toFixed(0)}%`
               }
