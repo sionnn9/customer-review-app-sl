@@ -66,7 +66,7 @@ export default function ChatUI() {
     if (!input.trim()) return;
 
     const words = input.split(" ");
-    const counts = [0, 0, 0]; // [positive, negative, neutral]
+    const counts = [0, 0, 0];
 
     words.forEach((word) => {
       const lower = word.toLowerCase();
@@ -98,45 +98,87 @@ export default function ChatUI() {
   };
 
   const total = sentiment[0] + sentiment[1] + sentiment[2];
-  const positivePercent = total ? ((sentiment[0] / total) * 100).toFixed(2) : 0;
-  const negativePercent = total ? ((sentiment[1] / total) * 100).toFixed(2) : 0;
-  const neutralPercent = total ? ((sentiment[2] / total) * 100).toFixed(2) : 0;
+  const positivePercent = total ? (sentiment[0] / total) * 100 : 0;
+  const negativePercent = total ? (sentiment[1] / total) * 100 : 0;
+  const neutralPercent = total ? (sentiment[2] / total) * 100 : 0;
+
+  // Arrow angle from -90 (negative) to +90 (positive)
+  const gaugeAngle =
+    total === 0 ? 0 : ((positivePercent - negativePercent) / 100) * 90;
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col h-screen bg-gray-50">
       {/* Chat messages */}
-      <div className="flex-1 p-4 break-words text-lg sm:text-xl md:text-2xl lg:text-4xl">
-        {message?.text.split(" ").map((word, i) => {
-          const lower = word.toLowerCase();
-          let className = "ml-2 text-black";
+      <div className="flex-1 p-4 overflow-y-auto space-y-3">
+        {message && (
+          <div className="flex flex-wrap">
+            {message.text.split(" ").map((word, i) => {
+              const lower = word.toLowerCase();
+              let className = "ml-1 text-black";
 
-          if (DataSet.positive.includes(lower))
-            className = "ml-2 text-green-600 font-semibold";
-          else if (DataSet.negative.includes(lower))
-            className = "ml-2 text-red-600 font-semibold";
-          else if (DataSet.neutral.includes(lower))
-            className = "ml-2 text-gray-600 font-medium";
+              if (DataSet.positive.includes(lower))
+                className = "ml-1 text-green-600 font-semibold";
+              else if (DataSet.negative.includes(lower))
+                className = "ml-1 text-red-600 font-semibold";
+              else if (DataSet.neutral.includes(lower))
+                className = "ml-1 text-yellow-600 font-semibold";
 
-          return (
-            <span key={i} className={className}>
-              {word}
-            </span>
-          );
-        })}
+              return (
+                <span key={i} className={className}>
+                  {word}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* Sentiment percentages */}
-      <div className="p-3 border-t text-sm text-black sm:text-base md:text-lg">
-        <p>Positive: {positivePercent}%</p>
-        <p>Negative: {negativePercent}%</p>
-        <p>Neutral: {neutralPercent}%</p>
-        <p>Spam Score:{spamScore}</p>
+      {/* Semicircle Gauge */}
+      <div className="flex justify-center p-4">
+        <div className="relative w-72 h-36">
+          {/* Color gradient semicircle */}
+          <div
+            className="absolute w-full h-full rounded-t-full overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(to right, #f56565, #ecc94b, #48bb78)", // red → yellow → green
+            }}
+          ></div>
+
+          {/* Arrow */}
+          <div
+            className="absolute bottom-0 left-1/2 w-1 h-36 bg-black origin-bottom transition-transform duration-300"
+            style={{ transform: `translateX(-50%) rotate(${gaugeAngle}deg)` }}
+          ></div>
+
+          {/* Labels */}
+          <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-800 px-2">
+            <span>Bad</span>
+            <span>Neutral</span>
+            <span>Good</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Sentiment Percentages */}
+      <div className="p-3 border-t text-sm sm:text-base md:text-lg flex justify-around">
+        <p className="text-green-600 font-semibold">
+          Positive: {positivePercent.toFixed(0)}%
+        </p>
+        <p className="text-red-600 font-semibold">
+          Negative: {negativePercent.toFixed(0)}%
+        </p>
+        <p className="text-yellow-600 font-semibold">
+          Neutral: {neutralPercent.toFixed(0)}%
+        </p>
+
+        <p className=" text-black">Spam Score:{spamScore}</p>
       </div>
 
       {/* Input box */}
-      <div className="p-3 border-t flex">
+      <div className="p-3 border-t flex bg-white">
         <input
-          className="flex-1 border text-black rounded-full px-4 py-2 focus:outline-none"
+          className="flex-1 border border-gray-300 text-black rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={input}
           onChange={handleChange}
           placeholder="Type a message..."
@@ -144,7 +186,7 @@ export default function ChatUI() {
         />
         <button
           onClick={sendMessage}
-          className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-full"
+          className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition"
         >
           Send
         </button>
