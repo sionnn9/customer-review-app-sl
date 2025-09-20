@@ -62,6 +62,34 @@ export default function ChatUI() {
   const [sentiment, setSentiment] = useState([0, 0, 0]); // [positive, negative, neutral]
   const wordCount: Record<string, number> = {};
   let spamScore = 0;
+  const [isSpam, setisSpam] = useState(false);
+
+  const sendData = async () => {
+    try {
+      const res = await fetch("YOUR_BACKEND_URL_HERE", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // tell server it's JSON
+        },
+        body: JSON.stringify({
+          username: "mohan",
+          message: message?.text, // replace with your actual message
+          rating: 0.45, // your rating value
+          sentiment: sentiment, // sentiment array
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json(); // parse JSON response
+      console.log("Server response:", data);
+    } catch (err) {
+      console.error("Error sending data:", err);
+    }
+  };
+
   const sendMessage = () => {
     if (!input.trim()) return;
 
@@ -82,7 +110,10 @@ export default function ChatUI() {
 
     // mark as spam if any word repeats too much
     for (const w in wordCount) {
-      if (wordCount[w] > 5) spamScore++;
+      if (wordCount[w] > 5) {
+        spamScore++;
+        setisSpam(true);
+      }
     }
     setSentiment(counts); // update sentiment once
     setMessage({ text: input });
@@ -185,7 +216,9 @@ export default function ChatUI() {
           onKeyDown={handleKeyDown}
         />
         <button
-          onClick={sendMessage}
+          onClick={() => {
+            sendMessage(), sendData();
+          }}
           className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition"
         >
           Send
